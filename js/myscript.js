@@ -149,6 +149,12 @@ function setHighlight_four(id) {
 	$('#votes'+id).css("background-color", "#428bca");
 }
 
+function setHighlight_three(id) {
+        $('#c_id'+id).css("background-color", "#428bca");
+        $('#c_name'+id).css("background-color", "#428bca");
+        $('#c_votes'+id).css("background-color", "#428bca");
+}
+
 function disableHighlight(id) {
 	$('#r_id'+id).css("background-color", "");
 	$('#r_name'+id).css("background-color", "");
@@ -220,8 +226,8 @@ function updateVotes(response) {
 	var candidateNum = response.data.candidates.length;
         $('#showfour').hide();
 	// repechage
-	if (candidateNum === 8) {
-//	if (candidateNum === 4) {
+//	if (candidateNum === 3) {
+	if (candidateNum === 4) {
 		$('#voting').hide();
 		$('#repechage').show();
 		for (var i = 0; i < candidateNum; i++) {
@@ -246,6 +252,7 @@ function updateVotes(response) {
 		for (var i = 0; i < candidateNum; i++) {
 			setProgressBar("#c_prog"+i, response.data.candidates[i].votes / 50 * 100);
 		}
+
 	}
 }
 
@@ -265,14 +272,45 @@ function updateResults(response) {
 			var t = computeTotal(response.data.candidates[i].votes, totalVotes, response.data.candidates[i].score, candidateNum);
 			$('#c_total'+i).html("总分 " + t);
 		}
+                
 		$('#voting').show();
 		$('#total').show();
 		$('#repechage').hide();
                 $('#showfour').hide();
 	}
+        
+        if (candidateNum = 3) {
+                console.log("3");
+                // calculate total votes
+                var totalVotes = 0;
+                for (var i = 0; i < candidateNum; i++) {
+                        totalVotes += response.data.candidates[i].votes;
+                }
+                // calculate total score
+                for (var i = 0; i < candidateNum; i++) {
+                        var t = computeTotal(response.data.candidates[i].votes, totalVotes, response.data.candidates[i].score, candidateNum);
+                        $('#c_total'+i).html("总分 " + t);
+                }
+
+                var max1 = 0;
+
+                for(var i = 0 ; i < 3 ; i++){
+                 if(response.data.candidates[i].votes >= response.data.candidates[max1].votes){
+                    max1 = i;
+                 }
+                  };
+                 setHighlight_three(max1);
+                $('.progress').hide();
+                $('#voting').show();
+                $('#total').show();
+                $('#repechage').hide();
+                $('#showfour').hide();
+        }
+
+
 	// repechage
-	else if (candidateNum === 8) {
-//	else if (candidateNum === 4) {
+//	else if (candidateNum === 3) {
+	else if (candidateNum === 4) {
 		// find max
 		var max = -1;
 		var index;
@@ -301,17 +339,34 @@ function updateResults(response) {
                 $('#showfour').hide();
 	}
 }
+
 var highlight = 0;
 var times = 0;
+
+/*        $('#id1').css("background-color", "");
+        $('#name1').css("background-color", "");
+        $('#votes1').css("background-color", "");
+        $('#id2').css("background-color", "");
+        $('#name2').css("background-color", "");
+        $('#votes2').css("background-color", "");
+*/
         $('#header').click(function(){
-        for( var  i = times*2; i <times*2+2;i++){
+        for( var i = times*2; i <times*2+2;i++){
         $('#name'+ i).html("");
         $('#id'+ i).html("");
         $('#votes'+ i).html("");
         console.log("clean");
 }
+     
+        disableHighlight_four(0);
         disableHighlight_four(1);
-        disableHighlight_four(2);
+/*        $('#id1').css("background-color", "");
+        $('#name1').css("background-color", "");
+        $('#votes1').css("background-color", "");
+        $('#id2').css("background-color", "");
+        $('#name2').css("background-color", "");
+        $('#votes2').css("background-color", "");
+*/
         times+=1;
         highlight += 1;
 });
@@ -433,23 +488,28 @@ $('table tr > :nth-child(3)').hide();
         //  for(var i = times*2; i < times*2+2  ; i++){
         //        $('#votes'+ i).html("票数 " + res[i].vote);
         //     }
-      //     }}
-      //    if(times % 2 == 1){
-      //    for(var i = times; i < times+2  ; i++){
-      //          $('#votes'+ i).html("总分 " + res[i].score);
-      //    }}
+        //     }}
+        //    if(times % 2 == 1){
+        //    for(var i = times; i < times+2  ; i++){
+        //          $('#votes'+ i).html("总分 " + res[i].score);
+        //    }}
 
         
 
-$('#showfour').click(function(){
-             var max1 = 0;
+$('#showfour').unbind().click(function(){
+             var max1 = times*2;
 
-       for(var i = 0 ; i < 2 ; i++){
+       for(var i = times*2 ; i < times*2+2 ; i++){
           if(res[i].score >= res[max1].score){
            max1 = i;
         }
         };
-       setHighlight_four(max1);
+       if(max1 % 2 == 0){
+       setHighlight_four(0);
+       }
+       if(max1 % 2 == 1){
+       setHighlight_four(1);
+       }
        $('#votes0').html("总分 " + res[times*2].score);
        $('#votes1').html("总分 " + res[times*2+1].score);
        highlight += 1;
