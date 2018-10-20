@@ -5,10 +5,18 @@ h1,table,th,#poll {text-align:center}
 
 /* center the image */
 #banner {
-	height: 250px;
+	height: 180px;
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
+}
+body{
+	background: url("../img/background.jpg") no-repeat fixed;
+	height: 100%;
+	/* Center and scale the image nicely */
+	background-position: center;
+	background-size: cover;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 #voting {
@@ -20,18 +28,52 @@ h1,table,th,#poll {text-align:center}
 	margin-top: 5px;
 }
 */
-body {
-	font-family: Arial, Helvetica, sans-serif;
+
+
+#result {
+	font-size: 20px;
+}
+table{
+	background-color: transparent;
 }
 
-#repechage {
-	/* 
-	preliminary
-	font-size: 35px; 
-	*/
-	
-	/* final */
+td{
+	width: 170px;
+}
+
+.profile{
+	margin-top: 0px;
+	padding-top: 0px;
+	width:100%;
+	font-size: 25px;
+	color: white;
+}
+
+.container{
+	margin: auto;
+	margin-top: 20px;
+}
+
+.container h2{
+	margin-top:50px;
+	text-align:center;
+	color: white;
 	font-size: 60px;
+}
+
+.bar{
+	margin:50px 50px 0px 50px;
+	display:inline-block;
+	border-radius: 10px;
+	background: #f7b731;
+	height:200px;
+	width: 60px;
+}
+
+.prog{
+	background:#778ca3;
+	border-radius: 10px;
+	width:100%;
 }
 
 #poll {
@@ -39,9 +81,40 @@ body {
 }
 
 .headRow {
-	background-color: #383838;
+
+	color: white;
 }
 
 #showfour {
-font-size: 60px;
+	font-size: 60px;
+}
+
+#single{
+	/*background-image: url("../img/mb.jpg");*/
+	background-size: cover;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.row{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+
+.debug{
+	border: 5px solid red;
+}
+
+.table {
+    table-layout: fixed;
+}
+
+.highlight{
+    color: #fed330;
+	background: #fa8231;
 }
