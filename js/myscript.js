@@ -4,6 +4,7 @@ var pollCtr = 0;
 var updateCandidatesFlag = true;
 var pollflag = true;
 var lastGroup = 0;
+var lastId = 0;
 
 function refresh(){
 	$.ajax({
@@ -40,9 +41,16 @@ function update(response){
 		}
 
 		if (response.state == "SINGLE"){
-			$('#result').hide();
-			$("#single").hide();
-			$('h1').html('歌手演唱中');
+			if(response.type == 'NewGroup'){
+				$('#result').hide();
+				$("#single").show();
+				updateSingle(response);
+				$('h1').html('投票通道尚未开启');
+			} else {
+				$('#result').hide();
+				$("#single").hide();
+				$('h1').html('歌手演唱中');
+			}
 		} else if (response.state == "VOTING"){
 			
 			if(response.type == 'NewGroup'){
@@ -91,6 +99,15 @@ function update(response){
 		$("#poll").show();
 
 		pollInterval = setInterval(function(){updatepoll(response);},30);
+	}
+}
+
+function updateSingle(response){
+	if(response.currentCandidateId != lastId && response.currentCandidateId != null){
+		lastId = response.currentCandidateId;
+		$('#candName').html(response.currentCandidateName);
+		$('#candId').html(response.currentCandidateId + '号选手');
+		$('#candImg').attr("src", "./img/pp/cp" + response.currentCandidateId +".PNG");
 	}
 }
 

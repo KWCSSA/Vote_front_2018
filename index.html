@@ -18,7 +18,38 @@
 		</div>
 		
 		<div id="single">
-			<!-- Bruce put things here -->
+			<div class="row">
+				<div class="col-sm-6" id="leftdiv">
+					<!--选手照片-->
+					<div id="imgdiv">
+						<img src="./img/pp/placeholder.PNG" class="rounded" alt="" id="candImg" style="width:80%">
+					</div>
+				</div>
+				<div class="col-sm-6" id="rightdiv">
+					<!--选手信息-->
+					<div class="font2">
+						<p id="candId"></p>
+						<p id="candName"></p>
+					</div>
+				</div>
+				
+				<div class="load">
+					<div class="loadInner"></div>
+				</div>
+				<script>
+					$(function(){
+						var i=0;
+						setInterval(function(){
+							if(i<100)
+							{
+								i+=Math.random()*0.02;
+							}
+							$(".loadInner").css({"width":i+"%"})
+							
+						},1000/50);
+					})
+				</script>
+			</div>
 		</div>
 		
 		<!-- for result -->

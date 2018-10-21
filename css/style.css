@@ -74,7 +74,6 @@ td{
 }
 
 .headRow {
-
 	color: white;
 }
 
@@ -83,9 +82,7 @@ td{
 }
 
 #single{
-	/*background-image: url("../img/mb.jpg");*/
 	background-size: cover;
-	height: 100vh;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -104,11 +101,11 @@ td{
 }
 
 .table {
-    table-layout: fixed;
+	table-layout: fixed;
 }
 
 .highlight{
-    color: #fed330;
+	color: #fed330;
 	background: red;
 }
 
@@ -116,4 +113,47 @@ td{
 	position: fixed;
 	bottom: 0;
 	width: 100%;
+}
+
+.progressdiv{
+	background-color:#00d2d3;
+	height: 20px;
+	width: 80%;
+	margin: 0 auto;
+}
+
+.font2{
+	color:rgb(223, 210, 255);
+	font-family: Calibri; 
+	font-size: 400%;
+	margin-top:80px;
+	margin-bottom: 70px;
+	padding-left: 10px;
+	text-align: left;
+}
+
+#imgdiv{
+	float: right;
+	width: 400px;
+	height: 500px;
+	text-align: right;
+	padding-right: 30px;
+}
+
+#rightdiv{
+	padding-left: 30px;
+}
+
+#leftdiv{
+	padding-right: 30px;
+}
+
+#candImg{
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+#header{
+	height: 140px;
 }
