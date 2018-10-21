@@ -1,8 +1,4 @@
 h1,table,th,#poll {text-align:center}
-/*.progress{
-  transform: rotate(-90deg);
-} */
-
 /* center the image */
 #banner {
 	height: 180px;
@@ -11,7 +7,7 @@ h1,table,th,#poll {text-align:center}
 	margin-right: auto;
 }
 body{
-	background: url("../img/background.jpg") no-repeat fixed;
+	/* background: url("../img/background.jpg") no-repeat fixed; */
 	height: 100%;
 	/* Center and scale the image nicely */
 	background-position: center;
@@ -23,12 +19,6 @@ body{
 	margin-top: 15px;
 	font-size: 40px;
 }
-
-/*#footer {
-	margin-top: 5px;
-}
-*/
-
 
 #result {
 	font-size: 20px;
@@ -62,16 +52,19 @@ td{
 }
 
 .bar{
-	margin:50px 50px 0px 50px;
+	margin:30px 50px 0px 50px;
 	display:inline-block;
 	border-radius: 10px;
-	background: #f7b731;
-	height:200px;
+	background: #464649;
+	height:150px;
 	width: 60px;
+	display: flex;
+	align-items: flex-end;
+	margin-bottom: 10px;
 }
 
 .prog{
-	background:#778ca3;
+	background:#f7b731;
 	border-radius: 10px;
 	width:100%;
 }
@@ -116,5 +109,11 @@ td{
 
 .highlight{
     color: #fed330;
-	background: #fa8231;
+	background: red;
+}
+
+.footer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
 }

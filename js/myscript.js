@@ -3,12 +3,12 @@ var pollCtr = 0;
 
 var updateCandidatesFlag = true;
 var pollflag = true;
+var lastGroup = 0;
 
 function refresh(){
 	$.ajax({
 		type: 'GET' ,
-		// url: 'http://test.tinnytian.com:8081/result',
-		url: 'http://test.tinnytian.com:8081/result',
+		url: 'http://localhost:8080/result',
 		dataType: 'json',
 		success: function(response){
 			update(response);
@@ -20,42 +20,64 @@ function refresh(){
 function update(response){
 	console.log(response);
 
+	if(response.type == 'NewGroup' && response.currentGroup != lastGroup){
+		lastGroup = response.currentGroup;
+		updateCandidatesFlag = true;
+	}
+
+	$('.highlight').removeClass('highlight');
+
 	if (response.mode === 'vote' && response.state === "IDLE") {
-		$('h1').html("比赛进行中");
+		$('h1').html("滑大校园偶像-敬请期待");
 		hideAll();
 		resetGlobalVars();
 	} else if (response.mode === 'vote') {
 		$("#poll").hide();
-		
-		// use a flag to avoid loading extra data
+	
 		if (updateCandidatesFlag) {
 			updateCandidatesFlag = false;
 			updateCandidatesInfo(response);
 		}
 
 		if (response.state == "SINGLE"){
-			$("#result").hide();
-			$("#single").show();
+			$('#result').hide();
+			$("#single").hide();
 			$('h1').html('歌手演唱中');
-		} 
-
-		if (response.state === "VOTING"){
-			$('#single').hide();
-			var s = response.timerRemain/1000;
-			if (s <= 20) {
-				s = '<span style="color:red">' + s + '</span>'
+		} else if (response.state == "VOTING"){
+			
+			if(response.type == 'NewGroup'){
+				$('#result').hide();
+				$("#single").show();
+			} else {
+				$('#result').show();
+				$("#single").hide();
 			}
-			$('h1').html('投票进行中 ' + s);
+			
+			var s = response.timerRemain/1000;
+			var t = '投票通道已开启';
+			if (s <= 20) {
+				s = '<span style="color:red">' + s + '</span>';
+				t = '投票通道即将关闭';
+			}
+			$('h1').html(t + '<br>' + s);
 			updateVotes(response);
-		}
-		else if (response.state === "VOTED"){
-			$('#single').hide();
-			$('h1').html('投票结束');
+
+		} else if (response.state == "VOTED"){
+			if(response.type == 'NewGroup'){
+				$('#result').hide();
+				$("#single").show();
+				$('h1').html('投票通道已关闭');
+			} else {
+				$('#result').show();
+				$("#single").hide();
+				$('h1').html('导师投票时间');
+			}
 			updateVotes(response);
-		}
-		else if (response.state === 'RESULT'){
+		} else if (response.state === 'RESULT'){
 			$('#single').hide();
+			$("#result").show();
 			$('h1').html('投票结果');
+			updateVotes(response);
 			updateResults(response);
 		}
 
@@ -114,12 +136,7 @@ function updatepoll(response){
 }
 
 function setProgressBar(id, val) {
-
-	//////////////////////////////////////////////
-	// REBECCA implement update bar logic here
-	//////////////////////////////////////////////
-
-    $("#c_prog"+id).style.height = val + "px";
+    $("#c_prog"+id).css('height', val + "%");
 }	
 
 
@@ -138,40 +155,71 @@ function resetGlobalVars() {
 }
 
 function updateCandidatesInfo(response) {
-    
-	var candidateNum = response.data.length;
+	
+	var candidates = null;
+	
+	if(response.type == 'NewGroup'){
+		candidates = response.data.filter(x=>x.group == response.currentGroup);
+	} else {
+		candidates = response.data;
+	}
+
+	var candidateNum = candidates.length;
 
 	for (var i = 0; i < candidateNum; i++) {
-		$('#r_id'+ (i % 6)).html(response.data[i].id+"号");
+		$('#r_id'+ i).html(candidates[i].id+"号");
 	}
 	for (var i = 0; i < candidateNum; i++) {
-		$('#r_name'+ (i % 6)).html(response.data[i].name);
+		$('#r_name'+ i).html(candidates[i].name);
 	}
 }
 
 function updateVotes(response) {
-	console.log(response.data);
-	var candidateNum = response.data.length;
 
-	// result
+	var candidates = null;
+	if(response.type == 'NewGroup'){
+		candidates = response.data.filter(x=>x.group == response.currentGroup);
+	} else {
+		candidates = response.data;
+	}	
+	var candidateNum = candidates.length;
 
-	$('#result').show();
-		
-	for (var i = 0; i < candidateNum; i++) {
-		$('#r_votes'+ (i % 6)).html(response.data[i].vote+" 票");
+	if(candidateNum > 6){
+		$('#row2').show();
+	} else {
+		$('#row2').hide();
 	}
 
+	var pad = 1;
+	// result
+		
+	for (var i = 0; i < candidateNum; i++) {
+		$('#r_votes'+ i).html((candidates[i].vote)+" 票");
+	}
+
+	var max = -1;
+	for (var i = 0; i < candidateNum; i++) {
+		max = Math.max(candidates[i].vote, max);
+	}
+	max += pad;
 	// update progress bar
-	var maxVotes = response.data.maxVotes;
 	for (var i = 0; i < candidateNum ; i++) {
-		setProgressBar("#c_prog"+ (i % 6), response.data[i].votes / 50 * 100);
+		setProgressBar(i, (candidates[i].vote + pad) * 90 / max + 10);
 	}
 }
 
 
 function updateResults(response) {
 
-	var candidateNum = response.data.length;
+	var candidates = null;
+	
+	if(response.type == 'NewGroup'){
+		candidates = response.data.filter(x=>x.group == response.currentGroup);
+	} else {
+		candidates = response.data;
+	}
+	
+	var candidateNum = candidates.length;
   
 	// result
 	
@@ -179,7 +227,7 @@ function updateResults(response) {
 		var max = -1;
 		var index;
 		for (var i = 0; i < candidateNum; i++) {
-			var votes = response.data[i].vote;
+			var votes = candidates[i].vote;
 			if (votes > max) {
 				max = votes;
 				index = i;
@@ -190,7 +238,7 @@ function updateResults(response) {
 			}
 		}
 		if (typeof index === "number") {
-			setHighlight(index % 6);
+			setHighlight(index);
 		}
 		if (typeof index === "string") {
 			var winners = index.split(",");
