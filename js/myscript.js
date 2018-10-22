@@ -9,7 +9,7 @@ var lastId = 0;
 function refresh(){
 	$.ajax({
 		type: 'GET' ,
-		url: 'http://localhost:8080/result',
+		url: 'http://ituwcssa.com:8080/result',
 		dataType: 'json',
 		success: function(response){
 			update(response);
@@ -237,33 +237,40 @@ function updateResults(response) {
 	}
 	
 	var candidateNum = candidates.length;
-  
-	// result
-	
-		// find max
-		var max = -1;
-		var index;
+	var index;
+
+
+	var max = -1;
+
+	if(response.type == 'NewGroup'){
 		for (var i = 0; i < candidateNum; i++) {
 			var votes = candidates[i].vote;
 			if (votes > max) {
 				max = votes;
 				index = i;
 			}
-			// in case of multiple winners
+				// in case of multiple winners
 			else if (votes === max) {
 				index = index + "," + i;
 			}
 		}
-		if (typeof index === "number") {
-			setHighlight(index);
+	} else {
+		let order = candidates.map((x,i)=>{return{votes: x.vote, ind: i}});
+		order.sort((a,b) => b.votes-a.votes);
+		let cutoff = order[2].votes;
+		index = order.filter(x => x.votes >= cutoff).map(x=> x.ind).join(',');
+	}
+
+	if (typeof index === "number") {
+		setHighlight(index);
+	}
+	if (typeof index === "string") {
+		var winners = index.split(",");
+		for (var i in winners) {
+			setHighlight(winners[i]);
 		}
-		if (typeof index === "string") {
-			var winners = index.split(",");
-			for (var i in winners) {
-				setHighlight(winners[i]);
-			}
-		}
-		$('#result').show();
+	}
+	$('#result').show();
 }
 
 function setHighlight(number){
