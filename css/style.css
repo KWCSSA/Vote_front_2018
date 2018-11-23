@@ -21,14 +21,21 @@ body{
 }
 
 #result {
-	font-size: 20px;
+	font-size: 40px;
 }
+
+#result2 {
+	font-size: 40px;
+}
+
 table{
 	background-color: transparent;
 }
 
 td{
-	width: 170px;
+	width: 220px;
+	padding-right: 45px;
+	padding-left: 45px;
 }
 
 .profile{
@@ -56,8 +63,8 @@ td{
 	display:inline-block;
 	border-radius: 10px;
 	background: #464649;
-	height:150px;
-	width: 60px;
+	height:250px;
+	width: 70px;
 	display: flex;
 	align-items: flex-end;
 	margin-bottom: 10px;
@@ -100,8 +107,9 @@ td{
 	border: 5px solid red;
 }
 
-.table {
+table {
 	table-layout: fixed;
+	border-spacing: 10px;
 }
 
 .highlight{
@@ -156,4 +164,5 @@ td{
 
 #header{
 	height: 140px;
+	margin-bottom: 70px;
 }

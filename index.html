@@ -16,42 +16,7 @@
 		<div id="header">
 			<h1>滑大校园偶像-敬请期待</h1>
 		</div>
-		
-		<div id="single">
-			<div class="row">
-				<div class="col-sm-6" id="leftdiv">
-					<!--选手照片-->
-					<div id="imgdiv">
-						<img src="./img/pp/placeholder.PNG" class="rounded" alt="" id="candImg" style="width:80%">
-					</div>
-				</div>
-				<div class="col-sm-6" id="rightdiv">
-					<!--选手信息-->
-					<div class="font2">
-						<p id="candId"></p>
-						<p id="candName"></p>
-					</div>
-				</div>
 				
-				<div class="load">
-					<div class="loadInner"></div>
-				</div>
-				<script>
-					$(function(){
-						var i=0;
-						setInterval(function(){
-							if(i<100)
-							{
-								i+=Math.random()*0.02;
-							}
-							$(".loadInner").css({"width":i+"%"})
-							
-						},1000/50);
-					})
-				</script>
-			</div>
-		</div>
-		
 		<!-- for result -->
 		<div id="result" align="center">
 			<table>
@@ -74,70 +39,34 @@
 							<div class="prog" id="c_prog3"> </div>
 						</div>
 					</td>
-					<td>
-						<div class="bar">
-							<div class="prog" id="c_prog4"> </div>
-						</div>
-					</td>
+				</tr>
+				<tr> <td id="r_name0"> </td> <td id="r_name1"> </td> <td id="r_name2"> </td> <td id="r_name3"> </td></tr>
+				<tr> <td id="r_votes0"> </td> <td id="r_votes1"> </td> <td id="r_votes2"> </td> <td id="r_votes3"> </td></tr>
+			</table>
+		</div>
+		
+		<div id="result2" align="center">
+			<table>
+				<tr><td>
+					<div class="bar">
+						<div class="prog" id="c_prog4"> </div>
+					</div> </td>
 					<td>
 						<div class="bar">
 							<div class="prog" id="c_prog5"> </div>
 						</div>
 					</td>
 				</tr>
-				<tr> <td id="r_id0"> 0 </td> <td id="r_id1"> 1 </td> <td id="r_id2"> 2 </td> <td id="r_id3"> 3 </td>  <td id="r_id4"> 4 </td> <td id="r_id5"> 5 </td></tr>
-				<tr> <td id="r_name0"> Rebecca </td> <td id="r_name1"> Jeffer </td> <td id="r_name2"> Adam </td> <td id="r_name3"> Winnie </td> <td id="r_name4"> Penny </td> <td id="r_name5"> Tony </td></tr>
-				<tr> <td id="r_votes0"> 100 </td> <td id="r_votes1"> 12 </td> <td id="r_votes2"> 34 </td> <td id="r_votes3"> 134 </td> <td id="r_votes4"> 234 </td> <td id="r_votes5"> 88 </td></tr>
-			</table>
-			<table id="row2">
-				<tr><td>
-					<div class="bar">
-						<div class="prog" id="c_prog6"> </div>
-					</div> </td>
-					<td>
-						<div class="bar">
-							<div class="prog" id="c_prog7"> </div>
-						</div>
-					</td>
-					<td>
-						<div class="bar">
-							<div class="prog" id="c_prog8"> </div>
-						</div>
-					</td>
-					<td>
-						<div class="bar">
-							<div class="prog" id="c_prog9"> </div>
-						</div>
-					</td>
-					<td>
-						<div class="bar">
-							<div class="prog" id="c_prog10"> </div>
-						</div>
-					</td>
-					<td>
-						<div class="bar">
-							<div class="prog" id="c_prog11"> </div>
-						</div>
-					</td>
-				</tr>
-				<tr> <td id="r_id6"> </td> <td id="r_id7"> </td> <td id="r_id8"> </td> <td id="r_id9"> </td>  <td id="r_id10"> </td> <td id="r_id11"> </td></tr>
-				<tr> <td id="r_name6"> </td> <td id="r_name7"> </td> <td id="r_name8"> </td> <td id="r_name9"> </td> <td id="r_name10"> </td> <td id="r_name11"> </td></tr>
-				<tr> <td id="r_votes6"> </td> <td id="r_votes7"> </td> <td id="r_votes8"> </td> <td id="r_votes9"> </td> <td id="r_votes10"> </td> <td id="r_votes11"> </td></tr>
+				<tr> <td id="r_name4"> </td> <td id="r_name5"> </td> </tr>
+				<tr> <td id="r_votes4"> </td> <td id="r_votes5"> </td> </tr>
 			</table>
 		</div>
-		
-		
+
 		<!-- for poll -->
 		<div id="poll">
 		</div>
 		
 	</main>
-	
-	<footer class="footer">
-		<div class="container">
-			<img id="banner" src="img/banner.png"/>
-		</div>
-	</footer>
 	
 	<script src="js/jquery-3.2.1.min.js"></script>
 	<script src="js/jquery-ui.min.js"></script>
